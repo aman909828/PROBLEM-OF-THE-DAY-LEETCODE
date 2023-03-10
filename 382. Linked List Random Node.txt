@@ -1,3 +1,6 @@
+#SOLUTION WITH O(N) SPACE COMPLEXITY
+PLEASE UPVOTE if you like 😁 If you have any question, feel free to ask.
+
 # Intuition
 Convert linked list to array/list and return random values from array/list
 <!-- Describe your first thoughts on how to solve this problem. -->
@@ -8,10 +11,10 @@ and then return random values from the array
 <!-- Describe your approach to solving the problem. -->
 
 # Complexity
-- Time complexity:O(n)
+- Time complexity:O(N)
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
 
-- Space complexity:O(n)
+- Space complexity:O(N)
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 # Code
@@ -31,6 +34,51 @@ class Solution:
         
     def getRandom(self) -> int:
         return self.nodes[randint(0,len(self.nodes)-1)]
+        
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(head)
+# param_1 = obj.getRandom()
+```
+
+
+#SOLUTION WITH O(1) SPACE COMPLEXITY:-
+
+PLEASE UPVOTE if you like 😁 If you have any question, feel free to ask.
+# Intuition
+Reservoir Sampling Approach
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+# Complexity
+- Time complexity:O(N)
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity:O(1)
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+
+    def __init__(self, head: Optional[ListNode]):
+        self.head=head
+
+    def getRandom(self) -> int:
+        curr=self.head
+        ans=0
+        count=0
+        while curr:
+            if random.randint(0,count)==0:
+                ans=curr.val
+            curr=curr.next
+            count+=1
+        return ans
         
 
 
