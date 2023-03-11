@@ -1,0 +1,51 @@
+#SOLUTION WITH O(N) SPACE COMPLEXITY
+PLEASE UPVOTE if you like 😁 If you have any question, feel free to ask.
+
+# Intuition
+Firstly,convert linked list to array(Space:O(N))
+Now,middle element of array will be the root of the Binary Tree and left half of array will be root.left similarly right half of array will be root.right
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+
+# Complexity
+- Time complexity:O(N)
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity:O(N)
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedListToBST(self, head: Optional[ListNode]) -> Optional[TreeNode]:
+        def converttoarray(head):
+            arr=[]
+            while head:
+                arr.append(head.val)
+                head=head.next
+            return arr
+
+        def arrtoTree(left,right):
+            if left>right:return None
+
+            mid=left+(right-left)//2
+            root=TreeNode(arr[mid])
+            root.left=arrtoTree(left,mid-1)
+            root.right=arrtoTree(mid+1,right)
+            return root
+
+        arr=converttoarray(head)
+        return arrtoTree(0,len(arr)-1)
+        
+```
