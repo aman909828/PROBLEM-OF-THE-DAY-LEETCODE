@@ -1,0 +1,46 @@
+#SOLUTION WITH O(N) SPACE COMPLEXITY
+PLEASE UPVOTE if you like 😁 If you have any question, feel free to ask.
+# Intuition
+you need to check smallest among first element of each individual list and then add it to ans and look for next element
+since,we need least value element every time we know Heap data structure which provide least value element at the top
+so,use Heap(priority Queue) accordingly and when Heap gets empty simply return head
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+
+# Complexity
+- Time complexity:O(NlogN)
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity:O(N)
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        head=ListNode(None)
+        curr=head
+        heap=[]
+        #insert first element of each individual list in heap
+        for i in range(len(lists)):
+            if lists[i]:
+                heapq.heappush(heap,(lists[i].val,i))
+                lists[i]=lists[i].next
+        #run loop until heap is not empty     
+        while heap:
+            val,i=heapq.heappop(heap)
+            curr.next=ListNode(val)
+            curr=curr.next
+            #insert next element of list in heap if exists
+            if lists[i]:
+                heapq.heappush(heap,(lists[i].val,i))
+                lists[i]=lists[i].next
+        
+        return head.next
+        
+```
