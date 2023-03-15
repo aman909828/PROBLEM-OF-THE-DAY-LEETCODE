@@ -1,0 +1,50 @@
+**PLEASE UPVOTE if you like 😁 If you have any question, feel free to ask.**
+# Intuition
+1.Beadth for search
+2.Level order Traversal 
+<!-- Describe your first thoughts on how to solve this problem. -->
+
+# Approach
+1.we have to use Breadth First Search
+2.Level order Traversal until we encounter queue[0]==None otherwise add its child to queue
+3.Pop first element of queue until len(queue)>0 and queue[0]==None
+4.if queue is empty return True else return False
+
+<!-- Describe your approach to solving the problem. -->
+
+# Complexity
+- Time complexity: O(N)
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+
+- Space complexity: O(N)
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
+# Code
+```
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isCompleteTree(self, root: Optional[TreeNode]) -> bool:
+        #Breadth First Search using queue
+        q=[]
+        q.append(root)
+        #Level order Traversal
+        while q[0]:
+            #Remove first element of queue
+            node=q.pop(0)
+            #Add child of node in queue
+            q.append(node.left)
+            q.append(node.right)
+        #Pop first element of queue until len(queue)>0 and queue[0]==None
+        while q and q[0] is None:
+            q.pop(0)
+        #if queue is empty return True else return False
+        if len(q)>0:
+            return False
+        return True
+
+```
