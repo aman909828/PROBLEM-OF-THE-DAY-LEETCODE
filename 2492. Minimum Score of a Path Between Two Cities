@@ -1,0 +1,23 @@
+class Solution:
+    def minScore(self, n: int, roads: List[List[int]]) -> int:
+        #using dfs
+        self.ans=int(1e9)
+        vis=[0 for i in range(n+1)]
+        adj=defaultdict(list)
+        for i in roads:
+            x,y,dist=i[0],i[1],i[2]
+            adj[x].append([y,dist])
+            adj[y].append([x,dist])
+
+        def dfs(node):
+            vis[node]=1
+            for x in adj[node]:
+                self.ans=min(self.ans,x[1])
+                if vis[x[0]]==0:
+                    vis[x[0]]=1
+                    self.ans=min(self.ans,dfs(x[0]))
+
+            return self.ans
+        
+        dfs(1)
+        return self.ans
