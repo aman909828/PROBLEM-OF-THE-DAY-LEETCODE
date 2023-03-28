@@ -1,0 +1,21 @@
+class Solution:
+    def mincostTickets(self, days: List[int], costs: List[int]) -> int:
+        n=len(days)
+        def solve(ind,validity):
+            if ind>=n:
+                return 0
+            if dp[ind][validity]!=-1:
+                return dp[ind][validity]
+            if days[ind]<=validity:
+                dp[ind][validity]=solve(ind+1,validity)
+                return dp[ind][validity]
+            else:
+                day=costs[0]+solve(ind+1,days[ind])
+                week=costs[1]+solve(ind+1,days[ind]+6)
+                month=costs[2]+solve(ind+1,days[ind]+29)
+                dp[ind][validity]=min(day,week,month)
+                return dp[ind][validity]
+
+        max_validity=days[n-1]+30
+        dp=[[-1 for i in range(max_validity)]for j in range(n)]
+        return solve(0,0)
