@@ -1,0 +1,21 @@
+class Solution:
+    def numRescueBoats(self, people: List[int], limit: int) -> int:
+        n=len(people)
+        people.sort()
+        s,e=0,n-1
+        ans=0
+        while s<=e:
+            cnt=people[s]+people[e]
+            if cnt<=limit:
+                ans+=1
+                s+=1
+                e-=1
+            elif people[e]<=limit:
+                ans+=1
+                e-=1
+            elif s+1<=e and people[s]+people[s+1]<=limit:
+                ans+=1
+                s+=2
+        return ans
+
+            
