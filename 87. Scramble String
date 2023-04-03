@@ -1,0 +1,23 @@
+class Solution:
+    def isScramble(self, s1: str, s2: str) -> bool:
+        d={}
+        def solve(s1,s2):
+            if s1==s2:
+                d[s1+'#'+s2]=True   #unique key s1+'#'+s2
+                return True
+            if len(s1)==1:
+                d[s1+'#'+s2]=False
+                return False
+            if s1+'#'+s2 in d:
+                return d[s1+'#'+s2]
+            for i in range(1,len(s1)):
+                if solve(s1[:i],s2[:i]) and solve(s1[i:],s2[i:]) or solve(s1[:i],s2[-i:]) and solve(s1[i:],s2[:-i]):
+                    d[s1+'#'+s2]=True
+                    return True
+            d[s1+'#'+s2]=False
+            return False
+            
+        if len(s1)!=len(s2):
+            return False
+        return solve(s1,s2)
+        
