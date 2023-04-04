@@ -1,0 +1,14 @@
+class Solution:
+    def partitionString(self, s: str) -> int:
+        dic=set()
+        ans=0
+        for i in s:
+            if i in dic:
+                ans+=1
+                dic.clear()
+                dic.add(i)
+            else:
+                dic.add(i)
+        if len(dic)>0:
+            ans+=1
+        return ans
