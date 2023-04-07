@@ -1,0 +1,37 @@
+class Solution:
+    def numEnclaves(self, grid: List[List[int]]) -> int:
+        #traversing boundary 1 to all 1 route using bfs/dfs
+        n,m=len(grid),len(grid[0])
+        vis=[[0 for i in range(m)]for j in range(n)]
+        queue=[]
+        delrow=[-1,0,+1,0]
+        delcol=[0,+1,0,-1]
+        #Traverse boundary
+        for j in range(m):
+            if grid[0][j]==1:
+                queue.append([0,j])
+            if grid[n-1][j]==1:
+                queue.append([n-1,j])
+        
+        for i in range(n):
+            if grid[i][0]==1:
+                queue.append([i,0])
+            if grid[i][m-1]==1:
+                queue.append([i,m-1])
+        #bfs
+        while queue:
+            row,col=queue.pop(0)
+            vis[row][col]=1
+            for i in range(4):
+                nrow=row+delrow[i]
+                ncol=col+delcol[i]
+                if nrow>=0 and nrow<n and ncol>=0 and ncol<m and vis[nrow][ncol]==0 and grid[nrow][ncol]==1:
+                    queue.append([nrow,ncol])
+                    vis[nrow][ncol]=1
+        #count no. of enclaves
+        count=0
+        for i in range(n):
+            for j in range(m):
+                if vis[i][j]==0 and grid[i][j]==1:
+                    count+=1
+        return count
