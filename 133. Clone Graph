@@ -1,0 +1,29 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+from collections import deque
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        #using bfs
+        if node==None:
+            return None
+        
+        vis=dict()
+        node_copy=Node(node.val,[])
+        vis[node]=node_copy
+        q=deque([node])
+        while q:
+            node=q.popleft()
+            for i in node.neighbors:
+                if i not in vis:
+                    i_copy=Node(i.val,[])
+                    vis[i]=i_copy
+                    vis[node].neighbors.append(i_copy)
+                    q.append(i)
+                else:
+                    vis[node].neighbors.append(vis[i])
+        return node_copy
