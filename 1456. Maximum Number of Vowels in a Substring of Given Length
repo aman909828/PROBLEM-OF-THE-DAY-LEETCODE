@@ -1,0 +1,17 @@
+class Solution:
+    def maxVowels(self, s: str, k: int) -> int:
+        #sliding window approach
+        n=len(s)
+        cnt=ans=i=0
+        dic={'a','e','i','o','u'}
+        start=0
+        while i<n:
+            while i-start<k:
+                if s[i] in dic:
+                    cnt+=1
+                i+=1
+            ans=max(ans,cnt)
+            if s[start] in dic:
+                cnt-=1
+            start+=1
+        return ans
