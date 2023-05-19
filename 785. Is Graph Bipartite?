@@ -1,0 +1,39 @@
+class Solution:
+
+    #using dfs
+
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+
+        v=len(graph)
+
+        color={}
+
+        def dfs(x):
+
+            for p in graph[x]:
+
+                if p not in color:
+
+                    color[p]=1-color[x]
+
+                    if not dfs(p):
+
+                        return False
+
+                elif color[p]==color[x]:
+
+                    return False
+
+            return True
+
+        for i in range(v):
+
+            if i not in color and graph[i]:
+
+                color[i]=0
+
+                if not dfs(i):
+
+                    return False
+
+        return True
