@@ -1,0 +1,34 @@
+class Solution:
+
+    def maxScore(self, nums1: List[int], nums2: List[int], k: int) -> int:
+
+        total=res=0
+
+        h=[]
+
+        pair=zip(nums1,nums2)
+
+        sorted_pair= sorted(pair,key=lambda x:-x[1])
+
+        for i in sorted_pair:
+
+            n1,n2= i
+
+            heappush(h,n1)
+
+            total+=n1
+
+            if len(h)>k:
+
+                x=heappop(h)
+
+                total-=x
+
+            if len(h)==k:
+
+                res=max(res,total*n2)
+
+        return res
+
+        
+
