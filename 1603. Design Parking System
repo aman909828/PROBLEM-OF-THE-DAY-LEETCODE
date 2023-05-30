@@ -1,0 +1,57 @@
+class ParkingSystem:
+
+    def __init__(self, big: int, medium: int, small: int):
+
+        self.bg=big
+
+        self.med=medium
+
+        self.sm=small
+
+    def addCar(self, carType: int) -> bool:
+
+        if carType==1:
+
+            if self.bg>0:
+
+                self.bg-=1
+
+                return True
+
+            else:
+
+                return False
+
+        elif carType==2:
+
+            if self.med>0:
+
+                self.med-=1
+
+                return True
+
+            else:
+
+                return False
+
+        elif carType==3:
+
+            if self.sm>0:
+
+                self.sm-=1
+
+                return True
+
+            else:
+
+                return False
+
+ 
+
+ # Your ParkingSystem object will be instantiated and called as such:
+
+# Your ParkingSystem object will be instantiated and called as such:
+
+# obj = ParkingSystem(big, medium, small)
+
+# param_1 = obj.addCar(carType)
