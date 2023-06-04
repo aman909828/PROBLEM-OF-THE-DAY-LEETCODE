@@ -1,0 +1,23 @@
+class Solution:
+    def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
+        self.ans=0
+        def dfs(node,res):
+            self.ans=max(self.ans,res)
+        
+            if adj[node]:
+                for i in adj[node]:
+                    if vis[i]==0:
+                        vis[i]=1
+                        dfs(i,res+informTime[i])
+
+        adj=defaultdict(list)
+        for i in range(n):
+            x=manager[i]
+            if x==-1:
+                continue
+            adj[x].append(i)
+        vis=[0 for i in range(n)]
+        vis[headID]=1
+        dfs(headID,informTime[headID])
+        return self.ans
+        
