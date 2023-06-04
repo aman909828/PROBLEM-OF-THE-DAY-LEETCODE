@@ -1,0 +1,27 @@
+class Solution:
+    def findCircleNum(self, graph: List[List[int]]) -> int:
+
+        def dfs(node):
+            if adj[node]:
+                for i in adj[node]:
+                    if vis[i]==0:
+                        vis[i]=1
+                        dfs(i)
+
+
+        n,m=len(graph),len(graph[0])
+        adj=defaultdict(list)
+        for i in range(n):
+            for j in range(m):
+                if i==j or graph[i][j]==0:
+                    continue
+                adj[i].append(j)
+        
+        vis=[0 for i in range(n)]
+        cnt=0
+        for i in range(n):
+            if vis[i]==0:
+                cnt+=1
+                dfs(i)
+        return cnt
+        
