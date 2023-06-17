@@ -1,0 +1,24 @@
+class Solution:
+    def makeArrayIncreasing(self, arr1: List[int], arr2: List[int]) -> int:
+        dp={}
+        arr2.sort()
+        def solve(ind,prev):
+            if ind==len(arr1):
+                return 0
+            if (ind,prev) in dp:
+                return dp[(ind,prev)]
+            temp=1e9
+            if ind==0 or prev<arr1[ind]:
+                temp=solve(ind+1,arr1[ind])
+            idx=bisect_right(arr2,prev)
+            if idx==len(arr2):
+                return temp
+            temp=min(1+solve(ind+1,arr2[idx]),temp)
+            dp[(ind,prev)]=temp
+            return temp
+
+        x=solve(0,-1)
+        if x==1e9:
+            return -1
+        return x
+        
