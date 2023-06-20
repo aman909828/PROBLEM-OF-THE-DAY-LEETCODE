@@ -1,0 +1,24 @@
+class Solution:
+    def getAverages(self, nums: List[int], k: int) -> List[int]:
+        n=len(nums)
+        ans=[]
+        i=j=0
+        sums=0
+        while j<n:
+            if j<k:
+                sums+=nums[j]
+            elif j<k+k:
+                sums+=nums[j]
+                ans.append(-1)
+            else:
+                sums+=nums[j]
+                x=sums//(k+k+1)
+                ans.append(x)
+                sums-=nums[i]
+                i+=1
+            j+=1
+        x=len(ans)
+        while x<n:
+            ans.append(-1)
+            x+=1
+        return ans 
