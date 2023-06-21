@@ -1,0 +1,16 @@
+class Solution:
+    def calculatesum(self,nums,cost,target):
+        res=0
+        for i,j in zip(nums,cost):
+            res+=abs(i-target)*j
+        return res
+    def minCost(self, nums: List[int], cost: List[int]) -> int:
+        s,e=min(nums),max(nums)
+        while s<e:
+            mid=(s+e)>>1
+            leftsum,rightsum=self.calculatesum(nums,cost,mid),self.calculatesum(nums,cost,mid+1)
+            if leftsum<rightsum:
+                e=mid
+            else:
+                s=mid+1
+        return self.calculatesum(nums,cost,s)
