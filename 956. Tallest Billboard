@@ -1,0 +1,20 @@
+class Solution:
+    def tallestBillboard(self, rods: List[int]) -> int:
+        n=len(rods)
+
+        def solve(ind,diff):
+            if ind==n:
+                if not diff:
+                    return 0
+                return -1e9
+            if dp[ind][5000+diff] != -1:
+                return dp[ind][5000+diff]
+            
+            op1=rods[ind]+solve(ind+1,diff+rods[ind])
+            op2=solve(ind+1,diff-rods[ind])
+            op3=solve(ind+1,diff)
+            dp[ind][5000+diff]=max(op1,op2,op3)
+            return dp[ind][5000+diff]
+
+        dp=[[-1 for i in range(10001)]for j in range(21)]
+        return solve(0,0)
