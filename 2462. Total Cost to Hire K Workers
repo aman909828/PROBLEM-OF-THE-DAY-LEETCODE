@@ -1,0 +1,60 @@
+class Solution:
+    def totalCost(self, costs: List[int], k: int, candidates: int) -> int:
+        n=len(costs)
+        mod=10**9+7
+        h1=[]
+        h2=[]
+        i,j=0,n-1
+        cnt=ans=0
+        vis=[0 for i in range(n)]
+        while i<=j:
+            if i==j and vis[i]==0:
+                vis[i]=1
+                heapq.heappush(h1,[costs[i],i])
+                break
+            if len(h1)<candidates and vis[i]==0:
+                vis[i]=1
+                heapq.heappush(h1,[costs[i],i])
+            if len(h2)<candidates and vis[j]==0:
+                vis[j]=1
+                heapq.heappush(h2,[costs[j],j])
+            if len(h1)==len(h2)==candidates and cnt<k:
+                x=heapq.heappop(h1)
+                y=heapq.heappop(h2)
+                if x[0]<=y[0]:
+                    ans+=x[0]%mod
+                    heapq.heappush(h2,y)
+                    i+=1
+                else:
+                    ans+=y[0]%mod
+                    heapq.heappush(h1,x)
+                    j-=1
+                cnt+=1
+                continue
+            if n%2==0 and i+1==j:
+                break
+            #print(i,j,ans)
+            i+=1
+            j-=1
+        #print(ans)
+        while cnt<k:
+            #print(h1)
+            #print(h2)
+            if h1 and h2:
+                x=heapq.heappop(h1)
+                y=heapq.heappop(h2)
+                if x[0]<=y[0]:
+                    ans+=x[0]%mod
+                    heapq.heappush(h2,y)
+                else:
+                    ans+=y[0]%mod
+                    heapq.heappush(h1,x)
+            elif h1:
+                x=heapq.heappop(h1)
+                ans+=x[0]
+            elif h2:
+                y=heapq.heappop(h2)
+                ans+=y[0]
+            cnt+=1
+            #print(ans)
+        return ans
