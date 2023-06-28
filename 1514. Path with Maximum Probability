@@ -1,0 +1,24 @@
+class Solution:
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start: int, end: int) -> float:
+        adj=defaultdict(list)
+        for i in range(len(edges)):
+            x,y=edges[i][0],edges[i][1]
+            adj[x].append([y,succProb[i]])
+            adj[y].append([x,succProb[i]])
+        vis=[0 for i in range(n)]
+        dist=[0]*n
+        dist[start]=1.0
+        h=[]
+        heapq.heapify(h)
+        heapq.heappush(h,[-1.0,start])
+        while h:
+            top=heapq.heappop(h)
+            prob=top[0]
+            node=top[1]
+            if vis[node]==0:
+                vis[node]=1
+                for i in adj[node]:
+                    if dist[i[0]]<-i[1]*prob:
+                        dist[i[0]]=-i[1]*prob
+                        heapq.heappush(h,[-dist[i[0]],i[0]])
+        return dist[end]
