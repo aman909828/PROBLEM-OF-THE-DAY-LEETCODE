@@ -1,0 +1,30 @@
+class Solution:
+    def shortestPathAllKeys(self, grid: List[str]) -> int:
+        #Bfs approach
+        m,n=len(grid),len(grid[0])
+        total_key=0
+        q=[]
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j]=='@':
+                    q.append([i,j,tuple(),1])
+                elif grid[i][j].islower():
+                    total_key+=1
+        vis=set()
+        row=[0,-1,0,1]
+        col=[-1,0,1,0]
+        while q:
+            i,j,key,moves=q.pop(0)
+            if (i,j,key) not in vis:
+                vis.add((i,j,key))
+                for k in range(4):
+                    new_i,new_j=i+row[k],j+col[k]
+                    if 0<=new_i<m and 0<=new_j<n and (new_i,new_j,key) not in vis:
+                        s=set(key)
+                        if grid[new_i][new_j].islower():
+                            s.add(grid[new_i][new_j])
+                        if grid[new_i][new_j] in '.@' or grid[new_i][new_j].islower() or (grid[new_i][new_j].isupper() and grid[new_i][new_j].lower() in s):
+                            q.append([new_i,new_j,tuple(s),moves+1])
+                            if len(s)==total_key:
+                                return moves
+        return -1
