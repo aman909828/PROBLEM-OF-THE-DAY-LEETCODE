@@ -1,0 +1,38 @@
+class Solution:
+    def latestDayToCross(self, row: int, col: int, cells: List[List[int]]) -> int:
+        rows=[0,-1,0,1]
+        cols=[-1,0,+1,0]
+        def is_possible(day):
+            matrix=[[0 for i in range(col)]for j in range(row)]
+            for i in range(day):
+                r,c=cells[i]
+                matrix[r-1][c-1]=1
+            q=deque([])
+            for i in range(col):
+                if matrix[0][i]==0:
+                    q.append((0,i))
+                    matrix[0][i]=1
+            while q:
+                r,c=q.popleft()
+                if r==row-1:
+                    return True
+                for i in range(4):
+                    nr,nc=r+rows[i],c+cols[i]
+                    if nr<0 or nr==row or nc<0 or nc==col or matrix[nr][nc]==1:
+                        continue
+                    matrix[nr][nc]=1
+                    q.append((nr,nc))
+            return False
+                
+
+        left,right=1,len(cells)
+        ans=0
+        while left<=right:
+            mid=(left+right)//2
+            if is_possible(mid):
+                ans=mid
+                left=mid+1
+            else:
+                right=mid-1
+        return ans
+            
