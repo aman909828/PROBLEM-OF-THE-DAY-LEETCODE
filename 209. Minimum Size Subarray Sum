@@ -1,0 +1,16 @@
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        if sum(nums)<target:
+            return 0
+        n=len(nums)
+        i,j=0,0
+        ans=10**5+1
+        sums=0
+        while j<n:
+            sums+=nums[j]
+            while sums>=target and i<=j:
+                ans=min(ans,j-i+1)
+                sums-=nums[i]
+                i+=1
+            j+=1
+        return ans
