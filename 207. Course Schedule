@@ -1,0 +1,27 @@
+class Solution:
+    def dfs(self,node,adj,vis,pathvis):
+        vis[node]=1
+        pathvis[node]=1
+        for i in adj[node]:
+            if vis[i]==0:
+                if self.dfs(i,adj,vis,pathvis):
+                    return True
+            elif pathvis[i]:
+                return True
+        pathvis[node]=0
+        return False
+
+    def canFinish(self, V: int, prerequisites: List[List[int]]) -> bool:
+        #using dfs,vis[] and pathvis[]
+        adj=[[]for i in range(V)]
+        for i in prerequisites:
+            x,y=i[0],i[1]
+            adj[y].append(x)
+        
+        vis=[0]*V
+        pathvis=[0]*V
+        for i in range(V):
+            if vis[i]==0:
+                if self.dfs(i,adj,vis,pathvis):
+                    return False
+        return True
