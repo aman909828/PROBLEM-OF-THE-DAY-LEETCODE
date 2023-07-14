@@ -1,0 +1,17 @@
+class Solution:
+    def longestSubsequence(self, arr: List[int], difference: int) -> int:
+        n=len(arr)
+        dp=[[-1 for i in range(n+1)]for j in range(n+1)]
+        #ans=1
+        def solve(ind,prev):
+            if ind==n:
+                return 0
+            if dp[ind][prev+1]!=-1:
+                return dp[ind][prev+1]
+            not_take=solve(ind+1,prev)
+            take=0
+            if prev==-1 or arr[ind]-arr[prev]==difference:
+                take=1+solve(ind+1,ind)
+            dp[ind][prev+1]=max(take,not_take)
+            return dp[ind][prev+1]
+        return solve(0,-1)
