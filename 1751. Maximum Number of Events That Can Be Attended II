@@ -1,0 +1,33 @@
+class Solution:
+    def maxValue(self, events: List[List[int]], k: int) -> int:
+        n=len(events)
+        events=sorted(events,key=lambda x:x[0])
+        dp=[[-1 for i in range(k+1)]for j in range(n+1)]
+        def getNext(left,key):
+            right=n-1
+            next_ind=n
+            while left<=right:
+                mid=(left+right)//2
+                if events[mid][0]>=key:
+                    next_ind=mid
+                    right=mid-1
+                else:
+                    left=mid+1
+            return next_ind
+
+        def solve(ind,rem):
+            if ind==n or rem==0:
+                return 0
+            if dp[ind][rem]!=-1:
+                return dp[ind][rem]
+            #not_take=solve(ind+1,prev_ind,rem)
+            next_ind=getNext(ind,events[ind][1]+1)
+            take=0
+            if rem>0:
+                take=events[ind][2]+solve(next_ind,rem-1)
+            not_take=solve(ind+1,rem)
+            dp[ind][rem]=max(take,not_take)
+            return dp[ind][rem]
+
+
+        return solve(0,k)
