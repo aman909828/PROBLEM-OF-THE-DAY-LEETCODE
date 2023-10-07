@@ -1,0 +1,14 @@
+class Solution:
+    def numOfArrays(self, n: int, m: int, k: int) -> int:
+        mod=int(1e9)+7
+        
+        if m<k:
+            return 0
+        dp=[[1]*m]+ [[0]*m for i in range(k-1)]
+        for i in range(n-1):
+            for j in range(k-1,-1,-1):
+                curr=0
+                for x in range(m):
+                    dp[j][x]=(dp[j][x] * (x+1) + curr)%mod
+                    if j: curr=(curr+dp[j-1][x])%mod
+        return sum(dp[-1])%mod
