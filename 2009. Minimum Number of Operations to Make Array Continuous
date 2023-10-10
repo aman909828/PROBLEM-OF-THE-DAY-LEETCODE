@@ -1,0 +1,12 @@
+class Solution:
+    def minOperations(self, nums: List[int]) -> int:
+        n=len(nums)
+        nums=sorted(set(nums))
+
+        ans=prev=0
+        for i,j in enumerate(nums):
+            if j-nums[prev]>=n:
+                prev+=1
+            ans=max(ans,i-prev+1)
+        return n-ans
+        
